@@ -1,25 +1,26 @@
 <?php
-declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use App\Helpers\CargoTechAPI;
+use App\Jobs\ProcessCargoItem;
 use Illuminate\Console\Command;
 
-class TestCargoCommand extends Command
+class RefreshCargoCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'cargo:test';
+    protected $signature = 'cargo:refresh';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Проверка работоспособности';
+    protected $description = 'Обновляет данные из API';
 
     /**
      * Create a new command instance.
@@ -39,10 +40,10 @@ class TestCargoCommand extends Command
     public function handle()
     {
         $api = new CargoTechAPI();
-        //$last_record = $api->getOneRecord();
-        //$all_pages = $api->getRecords(-1);
-        $five_pages = $api->getPageOfRecords(2);
-        var_dump($five_pages);
+        $data = $api->getPageOfRecords(2);
+        foreach ($data as $item) {
+            ProcessCargoItem::dispatch($item);
+        }
         return 0;
     }
 }

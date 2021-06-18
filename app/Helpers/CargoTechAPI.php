@@ -44,7 +44,18 @@ class CargoTechAPI
         return collect([$result]);
     }
 
-    public function getRecords(int $pages)
+    public function getRecords(int $limit, int $offset)
+    {
+        $url = 'v1/cargos';
+        $result = [];
+        $response = $this->_sendRequest($url, ['limit' => $limit, 'offset' => $offset]);
+        if (isset($response['data']) && is_array($response['data'])) {
+            $result = $response['data'];
+        }
+        return collect($result);
+    }
+
+    public function getPageOfRecords(int $pages)
     {
         $url = 'v1/cargos';
         // Получение всех страниц

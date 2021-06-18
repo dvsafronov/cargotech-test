@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use \App\Http\Controllers\CargoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [CargoController::class, 'index'])->name('cargo.index');
+Route::get('/{id}', [CargoController::class, 'show'])->name('cargo.show');
+Route::post('/', [CargoController::class, 'store'])->name('cargo.store');
+Route::put('/{id}', [CargoController::class, 'update'])->name('cargo.update');
+Route::delete('/{id}', [CargoController::class, 'destroy'])->name('cargo.destroy');
