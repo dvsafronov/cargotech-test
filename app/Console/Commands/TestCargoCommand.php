@@ -39,10 +39,9 @@ class TestCargoCommand extends Command
     public function handle()
     {
         $api = new CargoTechAPI();
-        //$last_record = $api->getOneRecord();
+        $last_record = $api->getOneRecord();
         //$all_pages = $api->getRecords(-1);
-        $five_pages = $api->getPageOfRecords(2);
-        var_dump($five_pages);
+        //$five_pages = $api->getPageOfRecords(2);
         return 0;
     }
 }
